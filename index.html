@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body>
+
+<div class="container" ng-app="myApp" ng-controller="myCtrl">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>
+          Accordion Example
+      </h2>
+      <p><strong>Note:</strong> The <strong>data-parent</strong> attribute makes sure that all collapsible elements under the specified parent will be closed when one of the collapsible item is shown.</p>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default" style="border-color: #FFF;" ng-repeat="row in nameList">
+          <div class="panel-heading" style="background:#FFF;" >
+            <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{row.id}}" ng-click="changeAccordion(row)">
+              {{row.name}}
+              <span class="glyphicon glyphicon-plus" ng-show="SelectedName!=row" style="float:right;"></span>
+              <span class="glyphicon glyphicon-minus" ng-show="SelectedName==row" style="float:right;"></span>
+            </h4>
+            <button type="button" ng-show="row.name=='Sudheer Kumar' && row.id==2" ng-click="addInfo(row)" class="btn btn-info" style="float:right;position: relative;bottom: 28px;right: 25px;">Add More</button>
+          </div>
+          <div id="collapse{{row.id}}" class="panel-collapse collapse">
+            <div class="panel-body">
+              <p><b>First Name : </b>{{row.firstName}}</p>
+              <p><b>Last Name : </b>{{row.lastName}}</p>
+              <p><b>Address : </b>{{row.address}}</p>
+              <p><b>Contact Number : </b>{{row.contactNumber}}</p>
+
+              <div class="panel-group" id="accordion{{row.id}}" ng-if="row.details.length>0" >
+                <div class="panel panel-default" style="border-color: #FFF;" ng-repeat="rowNested in row.details">
+                  <div class="panel-heading" style="background:#FFF;" data-toggle="collapse" data-parent="#accordion{{row.id}}" data-target="#collapseNested{{row.id}}{{$index}}" ng-click="changeAccordionNested(rowNested)">
+                    <h4 class="panel-title">
+                      {{rowNested.name}}
+                      <span class="glyphicon glyphicon-plus" ng-show="SelectedNameNested!=rowNested" style="float:right;"></span>
+                      <span class="glyphicon glyphicon-minus" ng-show="SelectedNameNested==rowNested" style="float:right;"></span>
+                    </h4>
+                  </div>
+                  <div id="collapseNested{{row.id}}{{$index}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <p><b>First Name : </b>{{rowNested.firstName}}</p>
+                      <p><b>Last Name : </b>{{rowNested.lastName}}</p>
+                      <p><b>Address : </b>{{rowNested.address}}</p>
+                      <p><b>Contact Number : </b>{{rowNested.contactNumber}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
